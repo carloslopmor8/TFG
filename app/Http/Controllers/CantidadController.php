@@ -196,7 +196,14 @@ class CantidadController extends Controller
             abort(404); // Or handle the unauthorized action as needed
         }
 
+       $gasto = $id;
+
         UsuarioGasto::where('gasto_id', $id->id)->delete();
+        $movimiento = Movimiento::create([
+            'proyecto_id' => $gasto->proyecto->id,
+            'user_id' => 1,
+            'valor' => 'Ha eliminado el gasto ' . $gasto->nombre ,
+        ]);
         // Perform the deletion
         $id->delete();
 
